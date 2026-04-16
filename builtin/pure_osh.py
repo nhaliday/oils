@@ -391,10 +391,13 @@ class Hash(vm._Builtin):
         status = 0
         if len(rest):
             for cmd in rest:  # enter in cache
-                full_path = self.search_path.CachedLookup(cmd)
-                if full_path is None:
-                    print_stderr('hash: %r not found' % cmd)
-                    status = 1
+                if arg.p is None:
+                    full_path = self.search_path.CachedLookup(cmd)
+                    if full_path is None:
+                        print_stderr('hash: %r not found' % cmd)
+                        status = 1
+                else:
+                    self.search_path.WriteCache(cmd, arg.p)
         else:  # print cache
             commands = self.search_path.CachedCommands()
             commands.sort()

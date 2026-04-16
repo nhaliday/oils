@@ -187,6 +187,36 @@ status=0
 status=0
 ## END
 
+#### hash -p forces path
+hash -p /bar/baz foo
+echo status=$?
+hash | grep -o /bar/baz
+echo status=$?
+## STDOUT:
+status=0
+/bar/baz
+status=0
+## END
+## N-I dash STDOUT:
+status=2
+status=1
+## END
+## N-I dash STDERR:
+dash: 1: hash: Illegal option -p
+## END
+## N-I zsh STDOUT:
+status=1
+status=1
+## END
+# zsh implements this feature using a different syntax: hash name=value
+## N-I zsh STDERR:
+zsh: bad option: -p
+## END
+## N-I mksh STDOUT:
+status=0
+status=1
+## END
+
 #### hash -r doesn't allow additional args
 hash -r whoami >/dev/null  # avoid weird output with mksh
 echo status=$?

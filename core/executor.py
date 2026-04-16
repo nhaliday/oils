@@ -254,6 +254,10 @@ class SearchPath(object):
             self.cache[name] = full_path
         return full_path
 
+    def WriteCache(self, name, path):
+        # type: (str, str) -> None
+        self.cache[name] = path
+
     def MaybeRemoveEntry(self, name):
         # type: (str) -> None
         """When the file system changes."""
